@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        div {
+            margin-top: 20px;
+        }
+        img {
+            max-width: 100px;
+            max-height: 100px;
+    </style>
+</head>
+<body>
+    <h1>黃莞心 110308041 風管四Guessing Game</h1>
+    <div id="result"></div>
+    <script>
+        const correctNumber = Math.floor(Math.random() * 98) + 2; // Random number between 2 and 99
+        let minRange = 1;
+        let maxRange = 100;
+        let attemptsLeft = 7;
+
+        while (attemptsLeft > 0) {
+            let guess = window.prompt(`Guess the number! Range: ${minRange}-${maxRange}\nAttempts left: ${attemptsLeft}`);
+            
+            // Check if the input is valid
+            if (!guess || isNaN(guess)) {
+                alert("Invalid input. Please enter a number within the specified range.");
+                continue;
+            }
+            
+            guess = parseInt(guess);
+            
+            // Check if the guess is within the range
+            if (guess <= minRange || guess >= maxRange) {
+                alert(`Invalid guess. Please choose a number between ${minRange + 1} and ${maxRange - 1}.`);
+                continue;
+            }
+
+            attemptsLeft--;
+
+            // Check if the guess is correct
+            if (guess === correctNumber) {
+                alert("Congratulations! You guessed the correct number!");
+                document.getElementById("result").innerHTML = '<img src="correct.jpg" alt="Correct">';
+                break;
+            } else if (guess > correctNumber) {
+                maxRange = guess; // Update the maximum range
+                alert("The number is lower.");
+            } else {
+                minRange = guess; // Update the minimum range
+                alert("The number is higher.");
+            }
+
+            // If no attempts are left, reveal the correct answer
+            if (attemptsLeft === 0) {
+                alert(`Game Over! The correct number was ${correctNumber}.`);
+                document.getElementById("result").innerHTML = '<img src="wrong.jpg" alt="Wrong">';
+            }
+        }
+    </script>
+</body>
+</html>
